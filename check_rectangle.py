@@ -107,6 +107,7 @@ def isSamePointExist(distance):
         return False
 
 userInputFormat = False
+rectangle = False
 # Read input from user 
 while(userInputFormat==False):
     userInput = input("Masukkan set dengan format ((x1,y1),(x2,y2),(x3,y3),(x4,y4))\n")
@@ -128,15 +129,10 @@ while(userInputFormat==False):
             XEqualPoints = setOfPoints.IsXEqual(YEqualPoints)
             if(XEqualPoints!=None): # Equal X value found
                 distance = setOfPoints.distanceArray(YEqualPoints,XEqualPoints)
-                if(isSquare(distance)): # The rectangle is square
-                    print("Masukan bukan persegi panjang.")
-                else:
-                    if(isSamePointExist(distance)): # Same point exists
-                        print("Masukan bukan persegi panjang.")
-                    else:
-                        print("Masukan berupa persegi panjang.")
-            else:
-                print("Masukan bukan persegi panjang.")
+                if(isSquare(distance)==False and isSamePointExist(distance)==False): # The rectangle is square
+                    rectangle = True
+        if(rectangle==True):
+            print("Masukan berupa persegi panjang.")
         else:
             print("Masukan bukan persegi panjang.")
     else:
