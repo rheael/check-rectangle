@@ -1,5 +1,14 @@
 import re
 
+class Point:
+    def __init__(self,point):
+        self.x = point[0]
+        self.y = point[1]
+    def getX(self):
+        return self.x
+    def getY(self):
+        return self.y
+
 class SetOfPoints:
     def __init__(self, points):
         self.points = points
@@ -15,19 +24,21 @@ class SetOfPoints:
             for j in range (i+1,4):
                 if(i+1<4):
                     # Found a couple of points with equal Y value
-                    if(points[i][1]==points[j][1]):
+                    point1 = Point(points[i])
+                    point2 = Point(points[j])
+                    if(point1.getY()==point2.getY()):
                         if(foundEqual==False):
                             # Mark that one couple with equal Y value has been found
                             foundEqual = True
                             # Add to the matrix
-                            YEqualPoints = [[points[i], points[j]]]
+                            YEqualPoints = [[point1, point2]]
                             # Store the Y value to check for the next iteration
-                            YEqual = points[i][1]
+                            YEqual = point1.getY()
                         else: 
-                            if(points[i][1]==YEqual): # There are more than 2 points with the same Y value
+                            if(point1.getY()==YEqual): # There are more than 2 points with the same Y value
                                 break
                             else: # The couple of points have different Y value, add to the matrix
-                                YEqualPoints.append([points[i], points[j]])
+                                YEqualPoints.append([point1, point2])
         if(len(YEqualPoints)==2): # There are exactly two couple of points with equal Y value
             return (YEqualPoints)
     def IsXEqual(self, YEqualPoints):
@@ -41,15 +52,19 @@ class SetOfPoints:
             for j in range (i+1):
                 if(i+1<3):
                     # Found a couple of points with equal X value
-                    if(YEqualPoints[0][i][0]==YEqualPoints[1][j][0]):
+                    point1 = YEqualPoints[0][i]
+                    point2 = YEqualPoints[1][j]
+                    if(point1.getX()==point2.getX()):
                         # Add to the matrix
-                        XEqualPoints = [[YEqualPoints[0][i],YEqualPoints[1][j]]]
+                        XEqualPoints = [[point1,point2]]
                         # Swap the index and check if the other couple has equal X value as well
                         i = SwapZeroAndOne(i)
-                        j = SwapZeroAndOne(j)      
-                        if(YEqualPoints[0][i][0]==YEqualPoints[1][j][0]):
+                        j = SwapZeroAndOne(j)    
+                        point1 = YEqualPoints[0][i]
+                        point2 = YEqualPoints[1][j]
+                        if(point1.getX()==point2.getX()):
                             # Store the X value to check for the next iteration
-                            XEqualPoints.append([YEqualPoints[0][i],YEqualPoints[1][j]])
+                            XEqualPoints.append([point1,point2])
         if(len(XEqualPoints)==2): # There are exactly two couple of points with equal Y value
             return (XEqualPoints)
     def distanceArray(self,YEqualPoints,XEqualPoints):
@@ -60,9 +75,9 @@ class SetOfPoints:
         '''
         distance = []
         for i in range (2):
-            dist = YEqualPoints[i][0][0] - YEqualPoints[i][1][0]
+            dist = YEqualPoints[i][0].getX() - YEqualPoints[i][1].getX()
             distance.append(dist)
-            dist = XEqualPoints[i][0][1] - XEqualPoints[i][1][1]
+            dist = XEqualPoints[i][0].getY() - XEqualPoints[i][1].getY()
             distance.append(dist)
         return distance
 
@@ -76,7 +91,7 @@ def SwapZeroAndOne(x):
         return 0  
 def isSquare(distance):
     '''
-    Check if the rectangle is square, all sides are equal.
+    Check if the quadrilateral is square, all sides are equal.
     '''
     if(distance[0]==distance[1]==distance[2]==distance[3]):
         return True
@@ -119,7 +134,7 @@ while(userInputFormat==False):
                     if(isSamePointExist(distance)): # Same point exists
                         print("Masukan bukan persegi panjang.")
                     else:
-                        print("Masukkan berupa persegi panjang.")
+                        print("Masukan berupa persegi panjang.")
             else:
                 print("Masukan bukan persegi panjang.")
         else:
