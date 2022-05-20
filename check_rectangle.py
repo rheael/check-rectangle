@@ -129,7 +129,7 @@ while(userInputFormat==False):
             XEqualPoints = setOfPoints.IsXEqual(YEqualPoints)
             if(XEqualPoints!=None): # Equal X value found
                 distance = setOfPoints.distanceArray(YEqualPoints,XEqualPoints)
-                if(isSquare(distance)==False and isSamePointExist(distance)==False): # The rectangle is square
+                if(isSquare(distance)==False and isSamePointExist(distance)==False): # The quadrilateral is not square and there's no same point
                     rectangle = True
         if(rectangle==True):
             print("Masukan berupa persegi panjang.")
